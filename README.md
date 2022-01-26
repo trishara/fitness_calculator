@@ -1,1 +1,1 @@
-# fitness_calculator
+# Trishara's Fitness Calculator
