@@ -333,7 +333,7 @@ def load_existing_file() -> str:
 
     global filename
 
-    files = os.listdir(r"C:\Users\ASUS\PycharmProjects\weight_loss_calculator")
+    files = os.listdir(r"\full\path\to\save\directory\here")
 
     text_files = []
 
