@@ -11,15 +11,16 @@ This calculator was made to compile all of my body composition data on the Samsu
 How to Use
 ----------
 1. Find the ```load_existing_file()``` function in main.py.
-2. Change the path to where you want your save files to be:  ```files = os.listdir(r"C:\Users\...\....\fitness_calculator")```
+2. Change the path to where you want your save files to be:  
+```files = os.listdir(r"C:\Users\...\....\fitness_calculator")```
 
-2. When you run the program, choose from three options:
+3. When you run the program, choose from three options:
 
 <p align="center">
 <img src="https://user-images.githubusercontent.com/98492683/151253450-25877de7-b98c-43e1-a7e3-ba5b74817a09.PNG" />
 </p>
 
-3. You will prompted to enter your daily weight, body fat %, skeletal muscle, and how many weeks of data you have. This should be the final output:
+4. You will prompted to enter your daily weight, body fat %, skeletal muscle, and how many weeks of data you have. This should be the final output:
 <p align="center">
 <img src="https://user-images.githubusercontent.com/98492683/151282499-62d962d5-d3f7-49d8-ae9f-2ff74e7324f3.PNG" />
 </p>
