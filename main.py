@@ -155,7 +155,7 @@ def get_skeletal_muscle_gained(skeletal_muscle_averages):
     skeletal_muscle_gain_per_week = float(skeletal_muscle_gain_per_week)
     skeletal_muscle_gain_per_month = skeletal_muscle_gain_per_week * 4
 
-    print(f"\n{Fore.LIGHTWHITE_EX}                   Average Skeletal Muscle Gained %      Per Week: {Fore.RESET}"
+    print(f"\n{Fore.LIGHTWHITE_EX}                   Average Skeletal Muscle Gained        Per Week: {Fore.RESET}"
           f"{Fore.LIGHTMAGENTA_EX}{skeletal_muscle_gain_per_week:.2f} lbs{Fore.RESET}{Fore.LIGHTWHITE_EX} | Per Month: {Fore.RESET}"
           f"{Fore.LIGHTMAGENTA_EX}{skeletal_muscle_gain_per_month:.2f} lbs{Fore.RESET}")
 
@@ -163,16 +163,17 @@ def get_skeletal_muscle_gained(skeletal_muscle_averages):
 def print_summary(final_data):
     """Prints all calculated data into a table"""
 
-    weight_averages = []
-    bodyfat_averages = []
-    skeletal_muscle_averages = []
+    if final_data:
+        weight_averages = []
+        bodyfat_averages = []
+        skeletal_muscle_averages = []
 
-    for data in final_data:
-        weight_averages.append(data[1])
-        bodyfat_averages.append(data[2])
-        skeletal_muscle_averages.append(data[3])
+        for data in final_data:
+            weight_averages.append(data[1])
+            bodyfat_averages.append(data[2])
+            skeletal_muscle_averages.append(data[3])
 
-    print(f'''\n{Fore.LIGHTWHITE_EX}
+        print(f'''\n{Fore.LIGHTWHITE_EX}
                                                 ┬─┐┌─┐┌─┐┬ ┬┬ ┌┬┐┌─┐
                                                 ├┬┘├┤ └─┐│ ││  │ └─┐
                                                 ┴└─└─┘└─┘└─┘┴─┘┴ └─┘
@@ -181,39 +182,46 @@ def print_summary(final_data):
         |       week       |    weight averages    |    body fat averages    |    skeletal muscle averages    |
        ~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~ {Fore.RESET}''')
 
-    output = []
+        output = []
 
-    for data in final_data:
-        week = f"{Fore.LIGHTWHITE_EX}|{Fore.RESET}        {Fore.LIGHTMAGENTA_EX}{data[0]}{Fore.RESET}         {Fore.LIGHTWHITE_EX}|{Fore.RESET}"
-        weight = f"{Fore.LIGHTMAGENTA_EX}        {data[1]:.2f}{Fore.RESET}{Fore.LIGHTWHITE_EX}        |{Fore.RESET}"
-        bodyfat = f"{Fore.LIGHTMAGENTA_EX}         {data[2]:.2f}{Fore.RESET} {Fore.LIGHTWHITE_EX}         |{Fore.RESET}"
-        skeletal_muscle = f"{Fore.LIGHTMAGENTA_EX}             {data[3]:.2f}{Fore.RESET}{Fore.LIGHTWHITE_EX}             |{Fore.RESET}"
-        output.append((week, weight, bodyfat, skeletal_muscle))
+        for data in final_data:
+            week = f"{Fore.LIGHTWHITE_EX}|{Fore.RESET}        {Fore.LIGHTMAGENTA_EX}{data[0]}{Fore.RESET}         {Fore.LIGHTWHITE_EX}|{Fore.RESET}"
+            weight = f"{Fore.LIGHTMAGENTA_EX}        {data[1]:.2f}{Fore.RESET}{Fore.LIGHTWHITE_EX}        |{Fore.RESET}"
+            bodyfat = f"{Fore.LIGHTMAGENTA_EX}         {data[2]:.2f}{Fore.RESET} {Fore.LIGHTWHITE_EX}         |{Fore.RESET}"
+            skeletal_muscle = f"{Fore.LIGHTMAGENTA_EX}             {data[3]:.2f}{Fore.RESET}{Fore.LIGHTWHITE_EX}             |{Fore.RESET}"
+            output.append((week, weight, bodyfat, skeletal_muscle))
 
-    for data in output:
-        print("{: >58} {: >15} {: >20} {: >30}".format(*data))
+        for data in output:
+            print("{: >58} {: >15} {: >20} {: >30}".format(*data))
 
-    print(
-        f"{Fore.LIGHTWHITE_EX}       ~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~{Fore.RESET}")
+        print(
+            f"{Fore.LIGHTWHITE_EX}       ~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~{Fore.RESET}")
 
-    get_weight_loss(weight_averages)
-    get_bodyfat_loss(bodyfat_averages)
-    get_skeletal_muscle_gained(skeletal_muscle_averages)
+        get_weight_loss(weight_averages)
+        get_bodyfat_loss(bodyfat_averages)
+        get_skeletal_muscle_gained(skeletal_muscle_averages)
+
+    else:
+        print(f"{Fore.LIGHTWHITE_EX}    You do not have any saved files.{Fore.RESET}")
+        main()
 
 
 def load_data(filename) -> list:
     """Load saved data into a list"""
 
     data = []
-    with open(filename, "rb") as f:
-        while True:
-            try:
-                data.append(pickle.load(f))
-            except EOFError:
-                break
+    try:
+        with open(filename, "rb") as f:
+            while True:
+                try:
+                    data.append(pickle.load(f))
+                except EOFError:
+                    break
 
-    return data
-
+        return data
+    except FileNotFoundError:
+        data = []
+        return data
 
 def save_data(filename, data):
     """Save final data into a file"""
@@ -333,7 +341,7 @@ def load_existing_file() -> str:
 
     global filename
 
-    files = os.listdir(r"\full\path\to\save\directory\here")
+    files = os.listdir(r"C:\Users\ASUS\PycharmProjects\weight_loss_calculator")
 
     text_files = []
 
@@ -351,32 +359,36 @@ def load_existing_file() -> str:
         save_files.append((id, file))
         ids.append(id)
 
-    print(f"\n{Fore.LIGHTWHITE_EX}    Choose which file you want to load:{Fore.RESET}")
+    if not save_files:
+        filename = ""
+        return filename
+    else:
+        print(f"\n{Fore.LIGHTWHITE_EX}    Choose which file you want to load:{Fore.RESET}")
 
-    for index, tuple in enumerate(save_files):
-        print(
-            f"        {Fore.LIGHTWHITE_EX}[{Fore.RESET}{Fore.LIGHTMAGENTA_EX}{tuple[0]}{Fore.RESET}{Fore.LIGHTWHITE_EX}]{Fore.RESET}"
-            f"{Fore.LIGHTMAGENTA_EX} {tuple[1]}{Fore.RESET}")
+        for index, tuple in enumerate(save_files):
+            print(
+                f"        {Fore.LIGHTWHITE_EX}[{Fore.RESET}{Fore.LIGHTMAGENTA_EX}{tuple[0]}{Fore.RESET}{Fore.LIGHTWHITE_EX}]{Fore.RESET}"
+                f"{Fore.LIGHTMAGENTA_EX} {tuple[1]}{Fore.RESET}")
 
-    while True:
+        while True:
 
-        x = input(f"{Fore.LIGHTMAGENTA_EX}    >> {Fore.RESET}")
+            x = input(f"{Fore.LIGHTMAGENTA_EX}    >> {Fore.RESET}")
 
-        try:
-            x = int(x)
+            try:
+                x = int(x)
 
-            if x not in ids:
+                if x not in ids:
+                    print(f"{Fore.RED}    You did make a valid selection. Please try again.{Fore.RESET}")
+                else:
+                    for index, tuple in enumerate(save_files):
+                        if x == tuple[0]:
+                            filename = tuple[1]
+                            break
+                    break
+            except ValueError:
                 print(f"{Fore.RED}    You did make a valid selection. Please try again.{Fore.RESET}")
-            else:
-                for index, tuple in enumerate(save_files):
-                    if x == tuple[0]:
-                        filename = tuple[1]
-                        break
-                break
-        except ValueError:
-            print(f"{Fore.RED}    You did make a valid selection. Please try again.{Fore.RESET}")
 
-    return filename
+        return filename
 
 
 def create_and_save_file() -> str:
