@@ -11,7 +11,7 @@ This calculator was made to compile all of my body composition data on the Samsu
 
 How to Use
 ----------
-In the ```load_existing_file()``` function, you will need to change the directory to where you want your save files to be.
+In the ```load_existing_file()``` function, you will need to change the path to where you want your save files to be (typically the path of where you have this repository on your system)
 
 When you run the program, you will be given three options: 
 
